@@ -1,0 +1,10 @@
+{
+    "manifest_version": 3,
+    "name": "Text Highlighter",
+    "version": "1.0",
+    "description": "選択したテキストにハイライトを追加する",
+    "permissions": ["contextMenus", "activeTab", "scripting"],
+    "background": {
+        "service_worker": "background.js"
+    }
+}
