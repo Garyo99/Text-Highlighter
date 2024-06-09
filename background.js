@@ -8,19 +8,33 @@ chrome.runtime.onInstalled.addListener(() => {
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     if (info.menuItemId === "highlight") {
-        chrome.scripting.executeScript({
-            target: { tabId: tab.id },
-            function: addHighlight,
-            args: [info.selectionText],
+        highlightText(tab);
+    }
+});
+
+chrome.commands.onCommand.addListener((command) => {
+    if (command === "highlight") {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            highlightText(tabs[0]);
         });
     }
 });
 
-function addHighlight(selectedText) {
-    const range = window.getSelection().getRangeAt(0);
-    const span = document.createElement("span");
-    span.style.backgroundColor = "yellow";
-    span.textContent = selectedText;
-    range.deleteContents();
-    range.insertNode(span);
+function highlightText(tab) {
+    chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        function: addHighlight,
+    });
+}
+
+function addHighlight() {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const span = document.createElement("span");
+        span.style.backgroundColor = "#FFFF00";
+        span.textContent = range.toString();
+        range.deleteContents();
+        range.insertNode(span);
+    }
 }

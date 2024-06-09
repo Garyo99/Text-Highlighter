@@ -12,5 +12,13 @@
         "48": "images/48.png",
         "96": "images/96.png",
         "128": "images/128.png"
+    },
+    "commands": {
+        "highlight": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+H"
+            },
+            "description": "選択したテキストにハイライトを追加"
+        }
     }
 }
