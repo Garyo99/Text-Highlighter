@@ -33,8 +33,10 @@ function addHighlight() {
         const range = selection.getRangeAt(0);
         const span = document.createElement("span");
         span.style.backgroundColor = "#FFFF00";
-        span.textContent = range.toString();
-        range.deleteContents();
-        range.insertNode(span);
+        try {
+            range.surroundContents(span);
+        } catch (e) {
+            console.error("Error surrounding contents: ", e);
+        }
     }
 }
